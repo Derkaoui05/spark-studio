@@ -1,6 +1,7 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
+import { motion } from "framer-motion";
+import Image from "next/image";
 
 export default function Hero() {
   return (
@@ -13,7 +14,9 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <span className="bg-clip-text text-5xl text-transparent bg-gradient-to-r from-primary via-sky-300 to-blue-500">Digital Innovation Studio</span>
+            <span className="bg-clip-text text-5xl text-transparent bg-gradient-to-r from-primary via-sky-300 to-blue-500">
+              Digital Innovation Studio
+            </span>
           </motion.h1>
           <motion.p
             className="mt-6 text-lg leading-8 text-muted-foreground"
@@ -21,7 +24,9 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-           Transform your business with stunning, results-driven websites that convert visitors into customers. Our expert team brings your vision to life with custom designs tailored to your brand.
+            Transform your business with stunning, results-driven websites that
+            convert visitors into customers. Our expert team brings your vision
+            to life with custom designs tailored to your brand.
           </motion.p>
           <motion.div
             className="mt-10 flex items-center gap-x-6"
@@ -50,17 +55,23 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.6 }}
         >
           <div className="relative">
-            <img
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/creative-SW6QDQbcVuwPgb6a2CYtYmRbsJa4k1.png"
+            <Image
+              src="/creative.png"
               alt="Flowers & Saints design concept"
               width={600}
               height={600}
-              className="w-[500px] rounded-2xl shadow-xl ring-1 ring-gray-900/10"
+              className="w-[500px] rounded-2xl hidden dark:block shadow-xl ring-1 ring-gray-900/10"
+            />
+            <Image
+              src="/light.png"
+              alt="Flowers & Saints design concept"
+              width={600}
+              height={600}
+              className="w-[500px] rounded-2xl block dark:hidden shadow-md"
             />
           </div>
         </motion.div>
       </div>
     </div>
-  )
+  );
 }
-
