@@ -13,7 +13,7 @@ function Navbar() {
   const [isMobile, setIsMobile] = useState(false);
   const tabs = [
     { name: "Home", url: "#", icon: <Home /> },
-    { name: "Why Us", url: "#about", icon: <Award /> },
+    { name: "Who we are", url: "#about", icon: <Award /> },
     { name: "Services", url: "#services", icon: <Zap /> },
     { name: "Projects", url: "#", icon: <LayoutGrid /> },
     { name: "Testimonials", url: "#", icon: <MessageSquareQuote /> },
@@ -37,7 +37,7 @@ function Navbar() {
       switch (tabName) {
         case "Home":
           return "calc(0% + 16px)";
-        case "Why Us":
+        case "Who we are":
           return "calc(23% + 2px)";
         case "Projects":
           return "calc(22% + 2px)";
@@ -48,7 +48,7 @@ function Navbar() {
       switch (tabName) {
         case "Home":
           return "calc(0% + 44px)";
-        case "Why Us":
+        case "Who we are":
           return "calc(30% + 2px)";
         case "Projects":
           return "calc(32% + 2px)";
