@@ -1,20 +1,11 @@
 "use client"
 
-import { useRef } from "react"
-import { motion, useInView, useScroll, useTransform } from "framer-motion"
-import {
-  ArrowRight,
-  BarChart,
-  CheckCircle,
-  Code,
-  Smartphone,
-  Lightbulb,
-  Zap,
-  Globe,
-  ShieldCheck,
-} from "lucide-react"
+import { useRef, useState } from "react"
+import { motion, useInView, useScroll, useTransform, AnimatePresence } from "framer-motion"
+import { ArrowRight, CheckCircle, Globe, ShieldCheck, ChevronDown } from "lucide-react"
 import { Button } from "../ui/button"
 import { Badge } from "@/components/ui/badge"
+import { services, ServiceType } from "@/data/services"
 
 // Animation Variants
 const containerVariants = {
@@ -51,6 +42,7 @@ const featureVariants = {
 }
 
 export default function Services() {
+  const [showAll, setShowAll] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
   const titleRef = useRef<HTMLHeadingElement>(null)
   const isInView = useInView(titleRef, { once: true, amount: 0.5 })
@@ -66,94 +58,17 @@ export default function Services() {
   const rotate1 = useTransform(scrollYProgress, [0, 1], [0, 10])
   const rotate2 = useTransform(scrollYProgress, [0, 1], [0, -15])
 
-  // Service data
-  const services = [
-    {
-      title: "Web Development",
-      description:
-        "Custom websites and web applications built with cutting-edge technologies that deliver exceptional performance and user experiences.",
-      icon: <Code className="h-6 w-6" />,
-      color: "from-violet-600 to-indigo-600",
-      lightColor: "from-violet-500/20 to-indigo-500/5",
-      textColor: "text-violet-500",
-      hoverBorder: "group-hover:border-violet-500/50",
-      hoverShadow: "group-hover:shadow-violet-500/10",
-      features: [
-        "Responsive & Mobile-First Design",
-        "Progressive Web Applications (PWA)",
-        "Custom CMS & E-commerce Solutions",
-        "API Development & Integration",
-      ],
-    },
-    {
-      title: "Digital Marketing",
-      description:
-        "Data-driven marketing strategies that increase visibility, drive qualified traffic, and convert visitors into loyal customers.",
-      icon: <BarChart className="h-6 w-6" />,
-      color: "from-cyan-600 to-blue-600",
-      lightColor: "from-cyan-500/20 to-blue-500/5",
-      textColor: "text-cyan-500",
-      hoverBorder: "group-hover:border-cyan-500/50",
-      hoverShadow: "group-hover:shadow-cyan-500/10",
-      features: [
-        "SEO & Content Strategy",
-        "Social Media Marketing & Management",
-        "PPC & Conversion Rate Optimization",
-        "Analytics & Performance Reporting",
-      ],
-    },
-    {
-      title: "Mobile App Development",
-      description:
-        "Native and cross-platform mobile applications that provide seamless experiences across iOS and Android devices.",
-      icon: <Smartphone className="h-6 w-6" />,
-      color: "from-emerald-600 to-teal-600",
-      lightColor: "from-emerald-500/20 to-teal-500/5",
-      textColor: "text-emerald-500",
-      hoverBorder: "group-hover:border-emerald-500/50",
-      hoverShadow: "group-hover:shadow-emerald-500/10",
-      features: [
-        "iOS & Android Native Development",
-        "Cross-Platform Solutions (React Native)",
-        "UI/UX Design & Prototyping",
-        "App Store Optimization & Launch",
-      ],
-    },
-    {
-      title: "Brand Strategy",
-      description:
-        "Comprehensive brand development that helps you stand out in the market and connect with your target audience.",
-      icon: <Lightbulb className="h-6 w-6" />,
-      color: "from-amber-600 to-orange-600",
-      lightColor: "from-amber-500/20 to-orange-500/5",
-      textColor: "text-amber-500",
-      hoverBorder: "group-hover:border-amber-500/50",
-      hoverShadow: "group-hover:shadow-amber-500/10",
-      features: [
-        "Brand Identity & Positioning",
-        "Messaging & Communication Strategy",
-        "Visual Identity Systems",
-        "Brand Guidelines & Assets",
-      ],
-    },
-    {
-      title: "Web Optimization",
-      description:
-        "Performance optimization services that ensure your digital platforms are fast, secure, and provide the best user experience.",
-      icon: <Zap className="h-6 w-6" />,
-      color: "from-rose-600 to-red-600",
-      lightColor: "from-rose-500/20 to-red-500/5",
-      textColor: "text-rose-500",
-      hoverBorder: "group-hover:border-rose-500/50",
-      hoverShadow: "group-hover:shadow-rose-500/10",
-      features: [
-        "Core Web Vitals Optimization",
-        "Performance Auditing & Monitoring",
-        "Caching & CDN Implementation",
-        "Accessibility Compliance (WCAG)",
-      ],
-    },
-  ]
+  // Determine which services to display
+  const visibleServices = showAll ? services : services.slice(0, 3)
+
+  // Handle load more click
+  const handleLoadMore = () => {
+    console.log("Current showAll state:", showAll)
+    setShowAll(!showAll)
+    console.log("New showAll state:", !showAll)
+    console.log("Services count:", services.length)
+    console.log("Visible services count:", showAll ? services.length : 3)
+  }
 
   return (
     <section ref={containerRef} id="services" className="py-24 relative overflow-hidden">
@@ -202,7 +117,11 @@ export default function Services() {
                   <motion.span
                     initial={{ width: 0 }}
                     animate={{ width: "100%" }}
-                    transition={{ duration: 0.8, delay: 0.2, ease: "easeInOut" }}
+                    transition={{
+                      duration: 0.8,
+                      delay: 0.2,
+                      ease: "easeInOut",
+                    }}
                     className="absolute -bottom-2 left-0 h-1 bg-gradient-to-r from-violet-500 to-cyan-500"
                   />
                 )}
@@ -225,64 +144,62 @@ export default function Services() {
           </motion.div>
         </div>
 
-        {/* Service Cards with animation */}
-        <motion.div
-          className="grid gap-6 md:gap-8 md:grid-cols-2 lg:grid-cols-3"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.1 }}
-        >
-          {services.map((service, index) => (
-            <motion.div
-              key={index}
-              variants={cardVariants}
-              whileHover={{ y: -8, transition: { duration: 0.2 } }}
-              className={`group flex flex-col p-6 space-y-4 bg-background/50 backdrop-blur-sm rounded-xl border border-border/50 ${service.hoverBorder} transition-all duration-300 hover:shadow-xl ${service.hoverShadow}`}
-            >
-              <div className={`p-3 bg-gradient-to-br ${service.lightColor} rounded-xl w-fit`}>
-                <div className={`${service.textColor}`}>{service.icon}</div>
-              </div>
-
-              <h3 className="text-xl font-bold">{service.title}</h3>
-
-              <p className="text-muted-foreground">{service.description}</p>
-
-              <motion.ul
-                className="space-y-3 mt-2"
-                variants={{
-                  hidden: {},
-                  show: {
-                    transition: {
-                      staggerChildren: 0.08,
-                      delayChildren: 0.3,
-                    },
-                  },
-                }}
-              >
-                {service.features.map((feature, i) => (
-                  <motion.li key={i} variants={featureVariants} className="flex items-center gap-2">
-                    <div
-                      className={`flex items-center justify-center w-5 h-5 rounded-full bg-gradient-to-br ${service.color}`}
-                    >
-                      <CheckCircle className="h-3 w-3 text-white" />
-                    </div>
-                    <span className="text-foreground/80">{feature}</span>
-                  </motion.li>
-                ))}
-              </motion.ul>
-
-              <div className="pt-4 mt-auto">
-                <Button variant="ghost" className={`group/btn p-0 h-auto ${service.textColor} hover:bg-transparent`}>
-                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-foreground/80 to-foreground/60 group-hover/btn:from-violet-500 group-hover/btn:to-cyan-500 transition-all duration-300">
-                    Learn more
-                  </span>
-                  <ArrowRight className="ml-2 h-4 w-4 text-foreground/70 group-hover/btn:text-cyan-500 group-hover/btn:translate-x-1 transition-all duration-300" />
-                </Button>
-              </div>
-            </motion.div>
+        {/* Service Cards Grid */}
+        <div className="grid gap-6 md:gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {/* Initial 3 Services */}
+          {services.slice(0, 3).map((service, index) => (
+            <ServiceCard key={`initial-${service.title}`} service={service} index={index} />
           ))}
-        </motion.div>
+
+          {/* Additional Services (conditionally rendered) */}
+          <AnimatePresence>
+            {showAll &&
+              services
+                .slice(3)
+                .map((service, index) => (
+                  <ServiceCard
+                    key={`additional-${service.title}`}
+                    service={service}
+                    index={index + 3}
+                    isAdditional={true}
+                  />
+                ))}
+          </AnimatePresence>
+        </div>
+
+        {/* Load More Button */}
+        {services.length > 3 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="flex justify-center mt-12"
+          >
+            <Button
+              onClick={handleLoadMore}
+              variant="outline"
+              size="lg"
+              className="group relative overflow-hidden bg-background/50 backdrop-blur-sm border-border/50 hover:border-violet-500/50 transition-all duration-300"
+            >
+              <span className="relative z-10 flex items-center gap-2">
+                {showAll ? "Show Less" : "Load More Services"}
+                <motion.div
+                  animate={{ rotate: showAll ? 180 : 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="text-violet-500"
+                >
+                  <ChevronDown className="h-4 w-4" />
+                </motion.div>
+              </span>
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-violet-500/10 to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                initial={{ y: "100%" }}
+                whileHover={{ y: 0 }}
+                transition={{ duration: 0.3 }}
+              />
+            </Button>
+          </motion.div>
+        )}
 
         {/* CTA Section */}
         <motion.div
@@ -312,5 +229,81 @@ export default function Services() {
         </motion.div>
       </div>
     </section>
+  )
+}
+
+// Extracted ServiceCard component for better organization
+function ServiceCard({ service, index, isAdditional = false } : {
+  service: ServiceType,
+  index: number,
+  isAdditional?: boolean,
+}) {
+  const additionalCardVariants = {
+    hidden: { opacity: 0, y: 20 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: [0.25, 0.1, 0.25, 1.0],
+      },
+    },
+    exit: {
+      opacity: 0,
+      y: -20,
+      transition: {
+        duration: 0.3,
+      },
+    },
+  }
+
+  return (
+    <motion.div
+      variants={isAdditional ? additionalCardVariants : cardVariants}
+      initial="hidden"
+      animate="show"
+      exit={isAdditional ? "exit" : undefined}
+      whileHover={{ y: -8, transition: { duration: 0.2 } }}
+      className={`group flex flex-col p-6 space-y-4 bg-background/50 backdrop-blur-sm rounded-xl border border-border/50 ${service.hoverBorder} transition-all duration-300 hover:shadow-xl ${service.hoverShadow}`}
+    >
+      <div className={`p-3 bg-gradient-to-br ${service.lightColor} rounded-xl w-fit`}>
+        <div className={`${service.textColor}`}>{service.icon}</div>
+      </div>
+
+      <h3 className="text-xl font-bold">{service.title}</h3>
+
+      <p className="text-muted-foreground">{service.description}</p>
+
+      <motion.ul
+        className="space-y-3 mt-2"
+        variants={{
+          hidden: {},
+          show: {
+            transition: {
+              staggerChildren: 0.08,
+              delayChildren: 0.3,
+            },
+          },
+        }}
+      >
+        {service.features.map((feature, i) => (
+          <motion.li key={i} variants={featureVariants} className="flex items-center gap-2">
+            <div className={`flex items-center justify-center w-5 h-5 rounded-full bg-gradient-to-br ${service.color}`}>
+              <CheckCircle className="h-3 w-3 text-white" />
+            </div>
+            <span className="text-foreground/80">{feature}</span>
+          </motion.li>
+        ))}
+      </motion.ul>
+
+      <div className="pt-4 mt-auto">
+        <Button variant="ghost" className={`group/btn p-0 h-auto ${service.textColor} hover:bg-transparent`}>
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-foreground/80 to-foreground/60 group-hover/btn:from-violet-500 group-hover/btn:to-cyan-500 transition-all duration-300">
+            Learn more
+          </span>
+          <ArrowRight className="ml-2 h-4 w-4 text-foreground/70 group-hover/btn:text-cyan-500 group-hover/btn:translate-x-1 transition-all duration-300" />
+        </Button>
+      </div>
+    </motion.div>
   )
 }
