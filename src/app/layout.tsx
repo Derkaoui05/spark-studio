@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Anybody } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/themes/theme-provider";
+import { Analytics } from "@vercel/analytics/react"
 
 const anybody = Anybody({
   variable: "--font-anybody",
@@ -31,6 +32,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {children}
+          <Analytics />
         </ThemeProvider>
       </body>
     </html>

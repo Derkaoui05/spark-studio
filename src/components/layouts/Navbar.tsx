@@ -68,7 +68,7 @@ function Navbar() {
             key={tab.name}
             href={tab.url}
             onClick={() => setActiveTab(tab.name)}
-            className={`relative cursor-pointer pointer-events-auto text-sm text-black dark:text-white px-6 py-2 rounded-full ${
+            className={`relative cursor-pointer pointer-events-auto whitespace-nowrap text-sm text-black dark:text-white px-6 py-2 rounded-full ${
               activeTab === tab.name ? "bg-gray-200 dark:bg-gray-800" : ""
             }`}
             style={{
