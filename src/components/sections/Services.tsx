@@ -95,7 +95,7 @@ export default function Services() {
           >
             <Badge variant="outline" className="px-4 py-1 border-border/50 bg-background/50 backdrop-blur-sm">
               <Globe className="h-3.5 w-3.5 mr-2 text-cyan-500" />
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-500 to-cyan-500">
+              <span className="text-muted-foreground">
                 What We Offer
               </span>
             </Badge>
