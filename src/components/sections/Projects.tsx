@@ -1,13 +1,28 @@
-"use client"
+"use client";
 
-import { useState, useRef, JSX } from "react"
-import { motion, useInView, useScroll, useTransform, AnimatePresence } from "framer-motion"
-import { ArrowUpRight, ExternalLink, Code, Layers, Smartphone, Sparkles, Filter, X } from 'lucide-react'
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { projects } from "@/data/project"
-import type { Project, TechIcon } from "@/data/project"
+import { useState, useRef, JSX } from "react";
+import {
+  motion,
+  useInView,
+  useScroll,
+  useTransform,
+  AnimatePresence,
+} from "framer-motion";
+import {
+  ArrowUpRight,
+  ExternalLink,
+  Code,
+  Layers,
+  Smartphone,
+  Sparkles,
+  Filter,
+  X,
+} from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { projects } from "@/data/project";
+import type { Project, TechIcon } from "@/data/project";
 
 // Animation variants
 const containerVariants = {
@@ -19,7 +34,7 @@ const containerVariants = {
       delayChildren: 0.2,
     },
   },
-}
+};
 
 const projectVariants = {
   hidden: { y: 30, opacity: 0 },
@@ -47,39 +62,44 @@ const projectVariants = {
       duration: 0.3,
     },
   },
-}
+};
 
 // Get all unique categories from projects
-const allCategories: string[] = ["All", ...Array.from(new Set(projects.flatMap((project) => project.categories)))]
+const allCategories: string[] = [
+  "All",
+  ...Array.from(new Set(projects.flatMap((project) => project.categories))),
+];
 
 export default function Projects() {
-  const [activeFilter, setActiveFilter] = useState<string>("All")
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
-  const containerRef = useRef<HTMLElement>(null)
-  const titleRef = useRef<HTMLHeadingElement>(null)
-  const isInView = useInView(titleRef, { once: true, amount: 0.5 })
+  const [activeFilter, setActiveFilter] = useState<string>("All");
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const containerRef = useRef<HTMLElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const isInView = useInView(titleRef, { once: true, amount: 0.5 });
 
   // Parallax effect for the background elements
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"],
-  })
+  });
 
-  const y1 = useTransform(scrollYProgress, [0, 1], [0, -50])
-  const y2 = useTransform(scrollYProgress, [0, 1], [0, -100])
-  const rotate1 = useTransform(scrollYProgress, [0, 1], [0, 10])
-  const rotate2 = useTransform(scrollYProgress, [0, 1], [0, -15])
+  const y1 = useTransform(scrollYProgress, [0, 1], [0, -50]);
+  const y2 = useTransform(scrollYProgress, [0, 1], [0, -100]);
+  const rotate1 = useTransform(scrollYProgress, [0, 1], [0, 10]);
+  const rotate2 = useTransform(scrollYProgress, [0, 1], [0, -15]);
 
   // Filter projects based on active category
   const filteredProjects: Project[] =
-    activeFilter === "All" ? projects : projects.filter((project) => project.categories.includes(activeFilter))
+    activeFilter === "All"
+      ? projects
+      : projects.filter((project) => project.categories.includes(activeFilter));
 
   // Tech icon mapping
   const techIcons: Record<TechIcon, JSX.Element> = {
     React: <Code className="h-4 w-4 text-blue-500" />,
     Mobile: <Smartphone className="h-4 w-4 text-violet-500" />,
     "UI/UX": <Layers className="h-4 w-4 text-amber-500" />,
-  }
+  };
 
   // Category color mapping
   const categoryColors: Record<string, string> = {
@@ -89,10 +109,14 @@ export default function Projects() {
     Branding: "from-amber-500/80 to-yellow-500/80",
     Marketing: "from-rose-500/80 to-pink-500/80",
     "UI/UX": "from-cyan-500/80 to-sky-500/80",
-  }
+  };
 
   return (
-    <section ref={containerRef} id="projects" className="py-24 relative overflow-hidden">
+    <section
+      ref={containerRef}
+      id="projects"
+      className="py-24 relative overflow-hidden"
+    >
       {/* Animated background elements */}
       <div className="absolute inset-0 pointer-events-none">
         <motion.div
@@ -114,13 +138,13 @@ export default function Projects() {
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
           >
-            <Badge variant="outline" className="px-4 py-1 border-border/50 bg-background/50 backdrop-blur-sm">
+            <Badge
+              variant="outline"
+              className="px-4 py-1 border-border/50 bg-background/50 backdrop-blur-sm"
+            >
               <Sparkles className="h-3.5 w-3.5 mr-2 text-teal-500" />
-              <span className="text-muted-foreground">
-                Our Projects
-              </span>
+              <span className="text-muted-foreground">Our Projects</span>
             </Badge>
-            
           </motion.div>
 
           <motion.div
@@ -130,7 +154,10 @@ export default function Projects() {
             viewport={{ once: true }}
             className="space-y-4 max-w-3xl"
           >
-            <h2 ref={titleRef} className="text-4xl md:text-5xl font-bold tracking-tighter leading-tight">
+            <h2
+              ref={titleRef}
+              className="text-4xl md:text-5xl font-bold tracking-tighter leading-tight"
+            >
               <span className="relative">
                 <span className="bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70">
                   Featured
@@ -160,8 +187,8 @@ export default function Projects() {
               viewport={{ once: true }}
               className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto"
             >
-              Explore our portfolio of successful projects that showcase our expertise and creative solutions across
-              various industries.
+              Explore our portfolio of successful projects that showcase our
+              expertise and creative solutions across various industries.
             </motion.p>
           </motion.div>
         </div>
@@ -197,8 +224,8 @@ export default function Projects() {
                     <X
                       className="ml-1 h-3 w-3 cursor-pointer"
                       onClick={(e) => {
-                        e.stopPropagation()
-                        setActiveFilter("All")
+                        e.stopPropagation();
+                        setActiveFilter("All");
                       }}
                     />
                   )}
@@ -253,7 +280,9 @@ export default function Projects() {
                     {/* Project categories */}
                     <div className="absolute top-3 left-3 flex flex-wrap gap-1.5 z-20">
                       {project.categories.map((category, catIndex) => {
-                        const colorClass = categoryColors[category] || "from-gray-500/80 to-slate-500/80"
+                        const colorClass =
+                          categoryColors[category] ||
+                          "from-gray-500/80 to-slate-500/80";
 
                         return (
                           <span
@@ -262,7 +291,7 @@ export default function Projects() {
                           >
                             {category}
                           </span>
-                        )
+                        );
                       })}
                     </div>
                   </div>
@@ -274,14 +303,20 @@ export default function Projects() {
                         <motion.div
                           className="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-500/10"
                           whileHover={{ scale: 1.1 }}
-                          transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                          transition={{
+                            type: "spring",
+                            stiffness: 400,
+                            damping: 10,
+                          }}
                         >
                           <ArrowUpRight className="h-4 w-4 text-emerald-500" />
                         </motion.div>
                       </div>
                     </div>
 
-                    <p className="text-muted-foreground mb-4 line-clamp-3">{project.description}</p>
+                    <p className="text-muted-foreground mb-4 line-clamp-3">
+                      {project.description}
+                    </p>
 
                     <div className="mt-auto flex items-center justify-between">
                       <div className="flex items-center space-x-1">
@@ -302,7 +337,9 @@ export default function Projects() {
                           size="sm"
                           className="p-0 h-auto text-emerald-600 hover:text-emerald-700 hover:bg-transparent"
                         >
-                          <span className="text-sm font-medium">View project</span>
+                          <span className="text-sm font-medium">
+                            View project
+                          </span>
                           <ExternalLink className="ml-1 h-3.5 w-3.5" />
                         </Button>
                       </motion.div>
@@ -350,5 +387,5 @@ export default function Projects() {
         </motion.div>
       </div>
     </section>
-  )
+  );
 }
