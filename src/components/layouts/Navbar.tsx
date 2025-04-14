@@ -15,7 +15,7 @@ function Navbar() {
     { name: "Home", url: "#", icon: <Home /> },
     { name: "Who we are", url: "#about", icon: <Award /> },
     { name: "Services", url: "#services", icon: <Zap /> },
-    { name: "Projects", url: "#", icon: <LayoutGrid /> },
+    { name: "Projects", url: "#projects", icon: <LayoutGrid /> },
     { name: "Testimonials", url: "#", icon: <MessageSquareQuote /> },
   ];
 

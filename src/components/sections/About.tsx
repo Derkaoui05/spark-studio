@@ -129,6 +129,7 @@ export default function About() {
   return (
     <section
       ref={containerRef}
+      id="about"
       className="py-24 relative overflow-hidden bg-gradient-to-b from-background to-background/80"
     >
       {/* Animated background shapes */}
