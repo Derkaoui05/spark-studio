@@ -11,7 +11,6 @@ import { Button } from "../ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card } from "@/components/ui/card"
 
-// Register GSAP plugins
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger)
 }
@@ -26,7 +25,6 @@ export default function About() {
   const timelineItemRefs = useRef<(HTMLDivElement | null)[]>([])
   const [timelineItemsInView, setTimelineItemsInView] = useState<boolean[]>([])
 
-  // Parallax effect for the background shapes
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"],
@@ -39,16 +37,13 @@ export default function About() {
   const rotate2 = useTransform(scrollYProgress, [0, 1], [0, -15])
   const rotate3 = useTransform(scrollYProgress, [0, 1], [0, 10])
 
-  // Timeline scroll animation
   const { scrollYProgress: timelineScrollProgress } = useScroll({
     target: timelineRef,
     offset: ["start end", "end start"],
   })
 
-  // Create a transformed value for the path drawing
   const pathOffset = useTransform(timelineScrollProgress, [0, 0.7], [1, 0])
 
-  // Get path length on mount for SVG path animation
   useEffect(() => {
     if (timelinePathRef.current) {
       const length = timelinePathRef.current.getTotalLength()
@@ -56,14 +51,11 @@ export default function About() {
     }
   }, [])
 
-  // Initialize timeline items in view state
   useEffect(() => {
     setTimelineItemsInView(Array(timeline.length).fill(false))
-    // Initialize refs array with the correct length
     timelineItemRefs.current = Array(timeline.length).fill(null)
   }, [])
 
-  // Callback to update timeline item in view state
   const handleTimelineItemInView = useCallback((index: number, inView: boolean) => {
     setTimelineItemsInView((prev) => {
       const newState = [...prev]
@@ -72,12 +64,10 @@ export default function About() {
     })
   }, [])
 
-  // Ref callback for timeline items
   const setTimelineItemRef = useCallback((el: HTMLDivElement | null, index: number) => {
     timelineItemRefs.current[index] = el
   }, [])
 
-  // Services data
   const services = [
     {
       title: "Web Development",
@@ -230,7 +220,6 @@ export default function About() {
                     </Button>
                   </div>
 
-                  {/* Decorative elements */}
                   <div
                     className={`absolute -right-12 -top-12 w-24 h-24 rounded-full bg-gradient-to-br ${service.color} opacity-20 blur-xl group-hover:opacity-30 transition-opacity duration-500`}
                   />
@@ -243,7 +232,6 @@ export default function About() {
           ))}
         </div>
 
-        {/* Timeline */}
         <div className="mb-24" ref={timelineRef}>
           <div className="text-center mb-12">
             <motion.div
@@ -269,10 +257,8 @@ export default function About() {
           </div>
 
           <div className="relative">
-            {/* Timeline Line - Static Background Line */}
             <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-border/30 rounded-full" />
 
-            {/* Timeline Line - Animated Gradient Line */}
             <div className="absolute left-1/2 transform -translate-x-1/2 h-full overflow-hidden">
               <motion.div
                 className="w-px h-full bg-primary rounded-full"
@@ -287,7 +273,6 @@ export default function About() {
               {timeline.map((item, index) => {
                 return (
                   <div key={index} ref={(el) => setTimelineItemRef(el, index)} className="relative">
-                    {/* Timeline dot */}
                     <motion.div
                       initial={{ scale: 0, opacity: 0 }}
                       animate={timelineItemsInView[index] ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
@@ -345,7 +330,6 @@ export default function About() {
           </div>
         </div>
 
-        {/* Stats */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}

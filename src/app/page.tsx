@@ -6,7 +6,7 @@ import Projects from "@/components/sections/Projects";
 import Services from "@/components/sections/Services";
 export default function Home() {
   return (
-    <div className="flex items-center justify-center scroll-smooth flex-col">
+    <div className="flex items-center justify-center flex-col">
       <Navbar />
       <Hero />
       <About />
