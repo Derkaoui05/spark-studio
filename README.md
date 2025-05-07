@@ -23,12 +23,6 @@ Spark Studio is an innovative digital agency specializing in the creation of hig
 - **Icons**: [Lucide React](https://lucide.dev/)
 - **Deployment**: [Vercel](https://vercel.com/)
 
-## Awards & Recognition
-
-- Webby Awards Finalist 2023
-- Awwwards Site of the Day (3 times)
-- CSS Design Awards Winner
-- Featured in Web Designer Magazine
 
 ## Sustainability Commitment
 
@@ -45,7 +39,7 @@ We are committed to creating sustainable digital experiences:
 
 Before you begin, make sure you have installed:
 - **Node.js** (v18.x or later)
-- **pnpm**, **npm**, or **yarn**
+- **pnpm**
 
 ### Installation
 
