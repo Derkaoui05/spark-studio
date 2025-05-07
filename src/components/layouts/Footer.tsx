@@ -63,7 +63,7 @@ const Section2 = () => {
         </div>
         <p className="text-xs text-[#ffffff80]">
           © {new Date().getFullYear()} Spark Studio. Created by
-          <a href="https://derkaouidev.netlify.app" className="text-white duration-500  hover:text-amber-800 transition-colors ">
+          <a href="https://derkaoui.netlify.app" className="text-white duration-500  hover:text-amber-800 transition-colors ">
             {" "}
             @DerkaouiYassir
           </a>
