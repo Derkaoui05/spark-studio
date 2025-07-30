@@ -13,7 +13,7 @@ Spark Studio is an innovative digital agency specializing in the creation of hig
 - **SEO optimization**: Architecture designed for better search engine rankings.
 - **Interactive experience**: Smooth animations and engaging interactive elements.
 - **Cross-platform compatibility**: Perfect adaptability on mobile, tablet, and desktop.
-- **Integrated contact form**: Facilitates communication with clients.
+- **Integrated contact form**: Facilitates communication with clients
 
 ## Tech Stack
 
